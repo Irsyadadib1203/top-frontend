@@ -14,7 +14,7 @@ import { toast } from '@/hooks/use-toast';
 
 // Fungsi untuk cek user ID
 async function checkUserId(gameSlug: string, userId: string, serverId?: string) {
- const BACKEND_URL = 'http://127.0.0.1:8000';
+ const BACKEND_URL = 'https://api.irxplay.com';
 
 const url = `${BACKEND_URL}/api/games/${gameSlug}/check-user?userId=${userId}${serverId ? `&serverId=${serverId}` : ''}`;
 const res = await fetch(url);
