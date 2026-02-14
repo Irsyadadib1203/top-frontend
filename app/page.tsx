@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Gamepad2, Zap, Sparkles, Star } from 'lucide-react';
+import { Gamepad2, Zap, Sparkles } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import EventCarousel from '@/components/EventCarousel';
@@ -219,176 +219,136 @@ const Index: React.FC = () => {
         </div>
       </section>
 
-      {/* Popular Games Section - Carousel yang lebih memukau, responsif */}
-      <section className="py-8 md:py-16">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-8 flex items-center gap-4 cursor-pointer"
-            whileHover={{ x: 10, scale: 1.05 }}
-          >
-            <motion.div 
-              className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary shadow-lg"
-              whileHover={{ rotate: 15, scale: 1.1 }}
-            >
-              <Zap className="h-6 w-6 text-primary-foreground" />
-            </motion.div>
-            <div>
-              <h2 className="font-gaming text-2xl font-bold text-foreground md:text-3xl hover:text-primary transition-colors duration-300">
-                Game Populer
-              </h2>
-              <p className="text-muted-foreground text-sm md:text-base">Pilih game favoritmu dan top up sekarang!</p>
-            </div>
-          </motion.div>
+      {/* Popular Games Section - Diubah menjadi grid statis tanpa scroll, hover lebih elegan dan profesional */}
+<section className="py-8 md:py-16">
+  <div className="container mx-auto px-4">
+    <motion.div
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="mb-8 flex items-center gap-4"
+    >
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary shadow-lg">
+        <Zap className="h-6 w-6 text-primary-foreground" />
+      </div>
+      <div>
+        <h2 className="font-gaming text-2xl font-bold text-foreground md:text-3xl">
+          Game Populer
+        </h2>
+        <p className="text-muted-foreground text-sm md:text-base">Pilih game favoritmu dan top up sekarang!</p>
+      </div>
+    </motion.div>
 
-          {/* Carousel horizontal yang responsif */}
-          <div className="relative overflow-hidden">
-            <motion.div 
-              className="flex gap-4 md:gap-6 overflow-x-auto pb-6 scrollbar-hide"
-              drag="x"
-              dragConstraints={{ left: -2000, right: 0 }}
-              whileTap={{ cursor: "grabbing" }}
-            >
-              {popularGames.map((game, index) => (
-                <motion.div
-                  key={game.id}
-                  initial={{ opacity: 0, scale: 0.8, x: 50 }}
-                  whileInView={{ opacity: 1, scale: 1, x: 0 }}
-                  whileHover={{ 
-                    scale: 1.2, 
-                    rotateY: 15, 
-                    z: 100, 
-                    boxShadow: '0 0 80px hsl(195 100% 50% / 0.8), 0 0 160px hsl(100 85% 50% / 0.4), 0 0 240px hsl(280 100% 50% / 0.2)' 
-                  }}
-                  transition={{ duration: 0.6, delay: index * 0.1, type: 'spring', stiffness: 200 }}
-                  viewport={{ once: true }}
-                  className="flex-shrink-0 w-32 h-40 md:w-48 md:h-56 lg:w-56 lg:h-64 cursor-pointer group"
-                >
-                  <div className="relative h-full">
-                    {/* Glow background on hover */}
-                    <motion.div 
-                      className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl scale-110"
-                      whileHover={{ scale: 1.2 }}
-                    />
-                    
-                    {/* GameCard dengan efek 3D */}
-                    <motion.div 
-                      className="relative z-10 h-full transform group-hover:rotate-3 group-hover:-translate-y-2 transition-all duration-500"
-                      style={{ perspective: '1000px' }}
-                    >
-                      <GameCard
-                        slug={slugify(game.name)}
-                        name={game.name}
-                        image={game.image}
-                        category={game.category}
-                        isPopular={game.isPopular}
-                        delay={0}
-                      />
-                    </motion.div>
-                    
-                    {/* Floating elements on hover */}
-                    <motion.div
-                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100"
-                      animate={{ rotate: 360, scale: [1, 1.2, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-                    >
-                      <Star className="h-6 w-6 text-yellow-400 fill-current" />
-                    </motion.div>
-                    <motion.div
-                      className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100"
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                    >
-                      <Sparkles className="h-5 w-5 text-primary" />
-                    </motion.div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
+    {/* Grid statis tanpa carousel, responsif */}
+    <motion.div 
+      className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-6 lg:grid-cols-5"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+    >
+      {popularGames.map((game, index) => (
+        <motion.div
+          key={game.id}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          whileHover={{ 
+            scale: 1.05, 
+            y: -5, 
+            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)' 
+          }}
+          transition={{ duration: 0.3, delay: index * 0.05 }}
+          viewport={{ once: true }}
+          className="cursor-pointer"
+        >
+          <GameCard
+            slug={slugify(game.name)}
+            name={game.name}
+            image={game.image}
+            category={game.category}
+            isPopular={game.isPopular}
+            delay={0}
+          />
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
+</section>
+
+{/* All Games Section - Hover lebih elegan dan profesional */}
+<section id="games-section" className="py-8 md:py-16">
+  <div className="container mx-auto px-4">
+    <motion.div
+      initial={{ opacity: 0, x: -30 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+    >
+      <div className="flex items-center gap-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary shadow-lg">
+          <Gamepad2 className="h-6 w-6 text-primary-foreground" />
         </div>
-      </section>
-
-      {/* All Games Section - Grid responsif dengan hover yang enhanced */}
-      <section id="games-section" className="py-8 md:py-16">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
-          >
-            <motion.div 
-              className="flex items-center gap-4 cursor-pointer"
-              whileHover={{ x: 10, scale: 1.05 }}
-            >
-              <motion.div 
-                className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary shadow-lg"
-                whileHover={{ rotate: -15, scale: 1.1 }}
-              >
-                <Gamepad2 className="h-6 w-6 text-primary-foreground" />
-              </motion.div>
-              <div>
-                <h2 className="font-gaming text-2xl font-bold text-foreground md:text-3xl hover:text-primary transition-colors duration-300">
-                  Semua Game
-                </h2>
-                <p className="text-muted-foreground text-sm md:text-base">Temukan game impianmu di sini</p>
-              </div>
-            </motion.div>
-            <div className="w-full md:w-80">
-              <SearchBar value={searchQuery} onChange={setSearchQuery} />
-            </div>
-          </motion.div>
-
-          <motion.div 
-            className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8"
-            whileHover={{ scale: 1.01 }}
-          >
-            {filteredGames.map((game, index) => (
-                            <motion.div
-                key={game.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                whileHover={{ 
-                  scale: 1.15, 
-                  y: -15, 
-                  rotateX: 10, 
-                  boxShadow: '0 0 50px hsl(195 100% 50% / 0.7), 0 0 100px hsl(100 85% 50% / 0.4)' 
-                }}
-                transition={{ duration: 0.4, delay: index * 0.02 }}
-                viewport={{ once: true }}
-                className="cursor-pointer"
-              >
-                <GameCard
-                  slug={slugify(game.name)}
-                  name={game.name}
-                  image={game.image}
-                  category={game.category}
-                  isPopular={game.isPopular}
-                  delay={0}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {filteredGames.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="py-12 text-center"
-            >
-              <Gamepad2 className="mx-auto h-12 w-12 text-muted-foreground" />
-              <p className="mt-4 text-muted-foreground">
-                Game tidak ditemukan. Coba kata kunci lain.
-              </p>
-            </motion.div>
-          )}
+        <div>
+          <h2 className="font-gaming text-2xl font-bold text-foreground md:text-3xl">
+            Semua Game
+          </h2>
+          <p className="text-muted-foreground text-sm md:text-base">Temukan game impianmu di sini</p>
         </div>
-      </section>
+      </div>
+      <div className="w-full md:w-80">
+        <SearchBar value={searchQuery} onChange={setSearchQuery} />
+      </div>
+    </motion.div>
+
+    <motion.div 
+      className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+    >
+      {filteredGames.map((game, index) => (
+        <motion.div
+          key={game.id}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          whileHover={{ 
+            scale: 1.05, 
+            y: -5, 
+            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)' 
+          }}
+          transition={{ duration: 0.3, delay: index * 0.02 }}
+          viewport={{ once: true }}
+          className="cursor-pointer"
+        >
+          <GameCard
+            slug={slugify(game.name)}
+            name={game.name}
+            image={game.image}
+            category={game.category}
+            isPopular={game.isPopular}
+            delay={0}
+          />
+        </motion.div>
+      ))}
+    </motion.div>
+
+    {filteredGames.length === 0 && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="py-12 text-center"
+      >
+        <Gamepad2 className="mx-auto h-12 w-12 text-muted-foreground" />
+        <p className="mt-4 text-muted-foreground">
+          Game tidak ditemukan. Coba kata kunci lain.
+        </p>
+      </motion.div>
+    )}
+  </div>
+</section>
 
       <Footer />
     </div>
