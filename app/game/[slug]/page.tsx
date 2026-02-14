@@ -105,7 +105,7 @@ const GameDetail: React.FC = () => {
       const nick = await checkUserId(
         slug!,
         userId,
-        game.requiresServer ? serverId : undefined
+        game.requiresServer ? serverId : undefined 
       );
 
       setNickname(nick); // <-- langsung string
@@ -314,25 +314,26 @@ const GameDetail: React.FC = () => {
                 <h2 className="font-gaming text-lg font-bold text-foreground">Pilih Nominal</h2>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+              {/* Perbaikan: Grid lebih padat di mobile untuk tampilan seperti bangjeff.com */}
+              <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
                 {game.products.map((product) => (
                   <motion.button
                     key={product.id}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => setSelectedProduct(product)}
-                    className={`relative rounded-xl border p-3 text-left transition-all ${
+                    className={`relative rounded-lg border p-2 text-left transition-all text-xs ${
                       selectedProduct?.id === product.id
                         ? 'border-primary bg-primary/10'
                         : 'border-border/50 bg-muted/30 hover:border-primary/50'
                     }`}
                   >
                     {selectedProduct?.id === product.id && (
-                      <div className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary">
-                        <Check className="h-3 w-3 text-primary-foreground" />
+                      <div className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary">
+                        <Check className="h-2 w-2 text-primary-foreground" />
                       </div>
                     )}
-                    <p className="text-sm font-medium text-foreground">{product.name}</p>
+                    <p className="text-xs font-medium text-foreground leading-tight">{product.name}</p>
                     <p className="mt-1 text-xs font-bold text-primary">{formatPrice(product.price)}</p>
                   </motion.button>
                 ))}

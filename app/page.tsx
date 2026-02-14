@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Gamepad2, Zap, Shield, Clock, Sparkles } from 'lucide-react';
+import { Gamepad2, Zap, Sparkles, Star } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import EventCarousel from '@/components/EventCarousel';
@@ -21,24 +21,6 @@ interface Particle {
   duration: number;
   delay: number;
 }
-
-const features = [
-  {
-    icon: Zap,
-    title: 'Proses Instan',
-    description: 'Diamond masuk dalam hitungan detik',
-  },
-  {
-    icon: Shield,
-    title: 'Aman & Terpercaya',
-    description: 'Transaksi dijamin 100% aman',
-  },
-  {
-    icon: Clock,
-    title: '24/7 Support',
-    description: 'Layanan pelanggan siap membantu',
-  },
-];
 
 const Index: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -76,11 +58,11 @@ const Index: React.FC = () => {
   // Generate partikel di client-side (tetap seperti sebelumnya)
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      const generatedParticles = [...Array(20)].map((_, i) => ({
+      const generatedParticles = [...Array(30)].map((_, i) => ({
         id: i,
         left: `${Math.random() * 100}%`,
         top: `${Math.random() * 100}%`,
-        duration: 5 + Math.random() * 5,
+        duration: 5 + Math.random() * 10,
         delay: Math.random() * 5,
       }));
       setParticles(generatedParticles);
@@ -104,44 +86,50 @@ const Index: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Animated Background Elements - Tetap sama */}
+      {/* Enhanced Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {/* Gradient orbs */}
+        {/* Gradient orbs - lebih banyak dan lebih dinamis */}
         <motion.div 
-          className="absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-primary/20 blur-[100px]"
-          animate={{ x: [0, 50, 0], y: [0, 30, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div 
-          className="absolute -right-32 top-1/2 h-96 w-96 rounded-full bg-secondary/20 blur-[100px]"
-          animate={{ x: [0, -50, 0], y: [0, -30, 0], scale: [1, 1.2, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div 
-          className="absolute left-1/3 bottom-1/4 h-64 w-64 rounded-full bg-neon-cyan/10 blur-[80px]"
-          animate={{ x: [0, 30, -30, 0], scale: [1, 1.3, 1] }}
+          className="absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-primary/20 blur-[120px]"
+          animate={{ x: [0, 100, 0], y: [0, 50, 0], scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
           transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
         />
+        <motion.div 
+          className="absolute -right-32 top-1/2 h-96 w-96 rounded-full bg-secondary/20 blur-[120px]"
+          animate={{ x: [0, -100, 0], y: [0, -50, 0], scale: [1, 1.3, 1], rotate: [360, 180, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div 
+          className="absolute left-1/3 bottom-1/4 h-64 w-64 rounded-full bg-neon-cyan/15 blur-[100px]"
+          animate={{ x: [0, 50, -50, 0], y: [0, -30, 30, 0], scale: [1, 1.4, 1], rotate: [0, 90, 180, 270, 360] }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div 
+          className="absolute right-1/4 top-1/3 h-80 w-80 rounded-full bg-gradient-to-r from-pink-500/10 to-purple-500/10 blur-[100px]"
+          animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+        />
         
-        {/* Grid pattern overlay */}
+        {/* Grid pattern overlay - lebih halus */}
         <div 
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `linear-gradient(hsl(195 100% 50%) 1px, transparent 1px), linear-gradient(90deg, hsl(195 100% 50%) 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
+            backgroundSize: '40px 40px'
           }}
         />
         
-        {/* Floating particles */}
+        {/* Floating particles - lebih banyak dan bervariasi */}
         {particles.map((p) => (
           <motion.div
             key={p.id}
-            className="absolute h-1 w-1 rounded-full bg-primary/40"
+            className={`absolute rounded-full ${p.id % 3 === 0 ? 'bg-primary/50 h-2 w-2' : p.id % 3 === 1 ? 'bg-secondary/50 h-1 w-1' : 'bg-neon-cyan/50 h-1.5 w-1.5'}`}
             style={{ left: p.left, top: p.top }}
             animate={{
-              y: [0, -100, 0],
+              y: [0, -150, 0],
+              x: [0, Math.random() * 50 - 25, 0],
               opacity: [0, 1, 0],
-              scale: [0, 1, 0]
+              scale: [0, 1.5, 0]
             }}
             transition={{
               duration: p.duration,
@@ -155,174 +143,237 @@ const Index: React.FC = () => {
 
       <Navbar />
 
-      {/* Hero Section - Tetap sama */}
+      {/* Hero Section - Lebih dramatis dan memukau */}
       <section className="relative overflow-hidden pb-8 pt-24 md:pb-16 md:pt-32">
         <div className="container relative mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
             className="mb-8 text-center"
           >
             <motion.div
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/15 px-6 py-3 backdrop-blur-sm cursor-pointer shadow-lg"
+              initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ delay: 0.3, duration: 0.6, type: 'spring', stiffness: 100 }}
+              whileHover={{ 
+                scale: 1.1, 
+                boxShadow: '0 0 40px hsl(195 100% 50% / 0.8), 0 0 80px hsl(100 85% 50% / 0.4)', 
+                rotate: 5 
+              }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Sparkles className="h-4 w-4 text-primary animate-pulse" />
-              <span className="text-sm font-medium text-primary">Platform Top Up Terpercaya #1</span>
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+              >
+                <Sparkles className="h-5 w-5 text-primary" />
+              </motion.div>
+              <span className="text-sm font-semibold text-primary">Platform Top Up Terpercaya #1</span>
             </motion.div>
             
-            <h1 className="font-gaming text-3xl font-bold md:text-5xl lg:text-6xl">
+            <h1 className="font-gaming text-4xl font-bold md:text-6xl lg:text-7xl mb-4">
               <motion.span 
-                className="gradient-text inline-block"
-                animate={{ 
-                  textShadow: [
-                    '0 0 20px hsl(195 100% 50% / 0.5)',
-                    '0 0 40px hsl(100 85% 50% / 0.5)',
-                    '0 0 20px hsl(195 100% 50% / 0.5)'
-                  ]
+                className="gradient-text inline-block cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  textShadow: '0 0 60px hsl(195 100% 50% / 1), 0 0 120px hsl(100 85% 50% / 0.6)', 
+                  rotateX: 10 
                 }}
-                transition={{ duration: 3, repeat: Infinity }}
               >
                 Top Up Game
               </motion.span>
               <br />
-              <span className="text-foreground">Tercepat & Termurah</span>
+              <motion.span 
+                className="text-foreground text-2xl md:text-4xl lg:text-5xl"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.8 }}
+                whileHover={{ color: 'hsl(195 100% 50%)', scale: 1.02 }}
+              >
+                Tercepat & Termurah
+              </motion.span>
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground md:text-lg">
-              Dapatkan diamond dan voucher game favoritmu dengan harga terbaik. 
-              Proses cepat, aman, dan terpercaya!
-            </p>
+            
+            {/* CTA Button untuk kesan pertama yang menarik */}
+           
           </motion.div>
 
-          {/* Event Carousel - Tambahkan conditional agar muncul setelah loading */}
+          {/* Event Carousel - Dengan efek hover yang lebih smooth */}
           {!loading && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              whileHover={{ scale: 1.02, y: -5 }}
+              className="relative"
             >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent rounded-3xl blur-xl" />
               <EventCarousel />
             </motion.div>
           )}
         </div>
       </section>
 
-      {/* Features Section - Perbaiki bg-linear-to-br ke bg-gradient-to-br */}
-      <section className="relative py-8 md:py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid gap-4 md:grid-cols-3 md:gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="group relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-card/80 to-card/40 p-6 backdrop-blur-sm text-center hover:border-primary/50 hover:shadow-[0_0_30px_hsl(195,100%,50%,0.2)] transition-all duration-300"
-              >
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                {/* Icon */}
-                <motion.div 
-                  className="relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary shadow-lg"
-                  whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <feature.icon className="h-8 w-8 text-primary-foreground" />
-                  
-                  {/* Pulse ring */}
-                  <motion.div
-                    className="absolute inset-0 rounded-2xl border-2 border-primary"
-                    animate={{ scale: [1, 1.3], opacity: [0.5, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                </motion.div>
-                
-                <h3 className="relative font-gaming text-lg font-bold text-foreground">
-                  {feature.title}
-                </h3>
-                <p className="relative mt-2 text-sm text-muted-foreground">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Popular Games Section - Perbaiki bg-linear-to-br ke bg-gradient-to-br */}
+      {/* Popular Games Section - Carousel yang lebih memukau, responsif */}
       <section className="py-8 md:py-16">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="mb-6 flex items-center gap-3"
+            transition={{ duration: 0.6 }}
+            className="mb-8 flex items-center gap-4 cursor-pointer"
+            whileHover={{ x: 10, scale: 1.05 }}
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-secondary">
-              <Zap className="h-5 w-5 text-primary-foreground" />
+            <motion.div 
+              className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary shadow-lg"
+              whileHover={{ rotate: 15, scale: 1.1 }}
+            >
+              <Zap className="h-6 w-6 text-primary-foreground" />
+            </motion.div>
+            <div>
+              <h2 className="font-gaming text-2xl font-bold text-foreground md:text-3xl hover:text-primary transition-colors duration-300">
+                Game Populer
+              </h2>
+              <p className="text-muted-foreground text-sm md:text-base">Pilih game favoritmu dan top up sekarang!</p>
             </div>
-            <h2 className="font-gaming text-xl font-bold text-foreground md:text-2xl">
-              Game Populer
-            </h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-6 lg:grid-cols-5">
-            {popularGames.map((game, index) => (
-              <GameCard
-                key={game.id}
-                slug={slugify(game.name)}
-                name={game.name}
-                image={game.image}
-                category={game.category}
-                isPopular={game.isPopular}
-                delay={index * 0.05}
-              />
-            ))}
+          {/* Carousel horizontal yang responsif */}
+          <div className="relative overflow-hidden">
+            <motion.div 
+              className="flex gap-4 md:gap-6 overflow-x-auto pb-6 scrollbar-hide"
+              drag="x"
+              dragConstraints={{ left: -2000, right: 0 }}
+              whileTap={{ cursor: "grabbing" }}
+            >
+              {popularGames.map((game, index) => (
+                <motion.div
+                  key={game.id}
+                  initial={{ opacity: 0, scale: 0.8, x: 50 }}
+                  whileInView={{ opacity: 1, scale: 1, x: 0 }}
+                  whileHover={{ 
+                    scale: 1.2, 
+                    rotateY: 15, 
+                    z: 100, 
+                    boxShadow: '0 0 80px hsl(195 100% 50% / 0.8), 0 0 160px hsl(100 85% 50% / 0.4), 0 0 240px hsl(280 100% 50% / 0.2)' 
+                  }}
+                  transition={{ duration: 0.6, delay: index * 0.1, type: 'spring', stiffness: 200 }}
+                  viewport={{ once: true }}
+                  className="flex-shrink-0 w-32 h-40 md:w-48 md:h-56 lg:w-56 lg:h-64 cursor-pointer group"
+                >
+                  <div className="relative h-full">
+                    {/* Glow background on hover */}
+                    <motion.div 
+                      className="absolute inset-0 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl scale-110"
+                      whileHover={{ scale: 1.2 }}
+                    />
+                    
+                    {/* GameCard dengan efek 3D */}
+                    <motion.div 
+                      className="relative z-10 h-full transform group-hover:rotate-3 group-hover:-translate-y-2 transition-all duration-500"
+                      style={{ perspective: '1000px' }}
+                    >
+                      <GameCard
+                        slug={slugify(game.name)}
+                        name={game.name}
+                        image={game.image}
+                        category={game.category}
+                        isPopular={game.isPopular}
+                        delay={0}
+                      />
+                    </motion.div>
+                    
+                    {/* Floating elements on hover */}
+                    <motion.div
+                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100"
+                      animate={{ rotate: 360, scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                    >
+                      <Star className="h-6 w-6 text-yellow-400 fill-current" />
+                    </motion.div>
+                    <motion.div
+                      className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100"
+                      animate={{ y: [0, -10, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                    >
+                      <Sparkles className="h-5 w-5 text-primary" />
+                    </motion.div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* All Games Section - Perbaiki bg-linear-to-br ke bg-gradient-to-br */}
+      {/* All Games Section - Grid responsif dengan hover yang enhanced */}
       <section id="games-section" className="py-8 md:py-16">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+            transition={{ duration: 0.6 }}
+            className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
           >
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-secondary">
-                <Gamepad2 className="h-5 w-5 text-primary-foreground" />
+            <motion.div 
+              className="flex items-center gap-4 cursor-pointer"
+              whileHover={{ x: 10, scale: 1.05 }}
+            >
+              <motion.div 
+                className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary shadow-lg"
+                whileHover={{ rotate: -15, scale: 1.1 }}
+              >
+                <Gamepad2 className="h-6 w-6 text-primary-foreground" />
+              </motion.div>
+              <div>
+                <h2 className="font-gaming text-2xl font-bold text-foreground md:text-3xl hover:text-primary transition-colors duration-300">
+                  Semua Game
+                </h2>
+                <p className="text-muted-foreground text-sm md:text-base">Temukan game impianmu di sini</p>
               </div>
-              <h2 className="font-gaming text-xl font-bold text-foreground md:text-2xl">
-                Semua Game
-              </h2>
-            </div>
+            </motion.div>
             <div className="w-full md:w-80">
               <SearchBar value={searchQuery} onChange={setSearchQuery} />
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-6 lg:grid-cols-5 xl:grid-cols-6">
+          <motion.div 
+            className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8"
+            whileHover={{ scale: 1.01 }}
+          >
             {filteredGames.map((game, index) => (
-              <GameCard
+                            <motion.div
                 key={game.id}
-                slug={slugify(game.name)}
-                name={game.name}
-                image={game.image}
-                category={game.category}
-                isPopular={game.isPopular}
-                delay={index * 0.03}
-              />
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                whileHover={{ 
+                  scale: 1.15, 
+                  y: -15, 
+                  rotateX: 10, 
+                  boxShadow: '0 0 50px hsl(195 100% 50% / 0.7), 0 0 100px hsl(100 85% 50% / 0.4)' 
+                }}
+                transition={{ duration: 0.4, delay: index * 0.02 }}
+                viewport={{ once: true }}
+                className="cursor-pointer"
+              >
+                <GameCard
+                  slug={slugify(game.name)}
+                  name={game.name}
+                  image={game.image}
+                  category={game.category}
+                  isPopular={game.isPopular}
+                  delay={0}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {filteredGames.length === 0 && (
             <motion.div
